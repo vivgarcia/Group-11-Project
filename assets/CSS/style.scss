@@ -1,6 +1,7 @@
 $headerColor: #ffcc00;
 $textColor: #fff;
 $fontStack: 'Helvetica', sans-serif;
+$backgroundColor: #0060a7;
 
 @mixin displayingContent{
     text-align: center;
@@ -8,7 +9,7 @@ $fontStack: 'Helvetica', sans-serif;
 }
 
 body{
-    background-color: navy;
+    background-color: $backgroundColor;
 }
 
 .container{
