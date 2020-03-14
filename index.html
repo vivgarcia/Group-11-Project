@@ -6,11 +6,34 @@
     <title>Beer Run</title>
     <!-- Bootstrap CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <!-- Font Awesome CDN -->
+    <script src="https://kit.fontawesome.com/9cc390ed29.js"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/CSS/style.css">
 </head>
 <body>
-    
+    <div class="container">
+        
+            <img src="assets/images/FKN62Y.png" alt="beer image" height="200px">
+            <h1>Beer Run</h1>
+            
+            <div class="card">
+                <div class="card-header">Search</div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="">City</label>
+                            <input type="text" class="form-control" id="by_city" placeholder="Austin">
+                        </div>
+                        <div class="form-group">
+                            <label for="">State</label>
+                            <input type="text" class="form-control" id="by_state" placeholder="Texas">
+                        </div>
+                        <button class="btn btn-primary" id="searchButton"><i class="fas fa-search"></i> Search</button>
+                    </form>
+                </div>
+            </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <!-- Custom JS -->
     <script src="assets/javascript/app.js"></script>

@@ -1,3 +1,25 @@
+$headerColor: #ffcc00;
+$textColor: #fff;
+$fontStack: 'Helvetica', sans-serif;
+
+@mixin displayingContent{
+    text-align: center;
+    padding-top: 50px;
+}
+
 body{
     background-color: navy;
+}
+
+.container{
+    @include displayingContent();
+    h1{
+        color: $headerColor;
+        font-family: $fontStack;
+        font-size: 72px;
+        font-weight: 700;
+    } 
+    .card{
+        text-align: left;
+    }
 }

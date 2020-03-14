@@ -1,4 +1,20 @@
 body {
   background-color: navy;
 }
+
+.container {
+  text-align: center;
+  padding-top: 50px;
+}
+
+.container h1 {
+  color: #ffcc00;
+  font-family: "Helvetica", sans-serif;
+  font-size: 72px;
+  font-weight: 700;
+}
+
+.container .card {
+  text-align: left;
+}
 /*# sourceMappingURL=style.css.map */
