@@ -17,21 +17,21 @@ function resetUserInput(){
    breweryName = "";
    breweryType = "";
    breweryTags = "";
-   queryURL = "https://api.openbrewerydb.org/breweries?"
+   queryURL = "https://api.openbrewerydb.org/breweries?";
 
    //  Clear user form values
    $("#by_city").val();
    $("#by_state").val();
    $("#by_postal").val();
-   //$("#by_name").val();
-   //$("#by_type").val();
+   $("#by_name").val();
+   $("#by_type").val();
    $("#by_tags").val();
 
    //  Clear dynamically created results
    $("#brewery_results").empty();
 };
 
-// //  Function to create new row and column for 
+//  Function to create new row and column for 
 // function createNewResultRow(rowNumber) {
 //   var newRow = $("<tr>").append(
 //     $("<td>").text(trainName),
@@ -49,9 +49,9 @@ $("#searchButton").on("click", function (event) {
   //  Code to make sure at the user has inputed some information
   var hasInput = false;
   $('.form-control').each(function () {
-    if ($(this).val() !== "") {
+    if ($(this).val() !== "" && $(this).val() !== "Choose...") {
       hasInput = true;
-    }
+    };
   });
   console.log(hasInput);
   if (!hasInput) {
@@ -64,7 +64,6 @@ $("#searchButton").on("click", function (event) {
       console.log(breweryCity);
       queryURL = queryURL + "&by_city=" + breweryCity;
       console.log(queryURL);
-
     };
     if ($("#by_state").val() !== "") {
       breweryState = $("#by_state").val().toLowerCase().trim().replace(/ /g, "%20");
@@ -78,20 +77,19 @@ $("#searchButton").on("click", function (event) {
       queryURL = queryURL + "&by_postal=" + breweryPostal;
       console.log(queryURL);
 
-    }
-    // if ($("#by_name").val() !== "") {
-    //   breweryName = $("#by_name").val().toLowerCase().trim().replace(/ /g, "%20");
-    //   console.log(breweryName);
-    //   queryURL = queryURL + "&by_name=" + breweryName;
-    //   console.log(queryURL);
-    // }
-    // if ($("#by_type").val() !== "") {
-    //   breweryType = $("#by_type").val().toLowerCase().trim().replace(/ /g, "%20");
-    //   console.log(breweryType);
-    //   queryURL = queryURL + "&by_type=" + breweryType;
-    //   console.log(queryURL);
-
-    // }
+    };
+     if ($("#by_brewery").val() !== "") {
+      breweryName = $("#by_brewery").val().toLowerCase().trim().replace(/ /g, "%20");
+      console.log(breweryName);
+      queryURL = queryURL + "&by_name=" + breweryName;
+      console.log(queryURL);
+    };
+    if ($("#by_type").val() !== "Choose...") {
+       breweryType = $("#by_type").val().toLowerCase().trim().replace(/ /g, "%20");
+       console.log(breweryType);
+       queryURL = queryURL + "&by_type=" + breweryType;
+       console.log(queryURL);
+     };
     if ($("#by_tags").val() !== "") {
       breweryTags = $("#by_tags").val().toLowerCase().trim().replace(/ /g, "%20");
       console.log(breweryTags);
@@ -111,6 +109,7 @@ $("#searchButton").on("click", function (event) {
         alert("This section will update and alert the user that no breweries were found using their search parameters")
         resetUserInput();
       } else {
+
         console.log(response[0].name);
         resetUserInput();
       }
