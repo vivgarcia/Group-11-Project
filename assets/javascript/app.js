@@ -1,12 +1,46 @@
 //  Create object to hold user input from text boxes
-var breweryState = "";
 var breweryCity = "";
+var breweryState = "";
 var breweryZipcode = "";
 var breweryName = "";
-var breweryTag = "";
 var breweryType = "";
+var breweryTags = "";
 
 var queryURL = "https://api.openbrewerydb.org/breweries?";
+
+//  Function to clear values from the form and reset the variables
+function resetUserInput(){
+   //  Return all variables to original values for a new search
+   breweryCity = "";
+   breweryState = "";
+   breweryPostal = "";
+   breweryName = "";
+   breweryType = "";
+   breweryTags = "";
+   queryURL = "https://api.openbrewerydb.org/breweries?"
+
+   //  Clear user form values
+   $("#by_city").val();
+   $("#by_state").val();
+   $("#by_postal").val();
+   //$("#by_name").val();
+   //$("#by_type").val();
+   $("#by_tags").val();
+
+   //  Clear dynamically created results
+   $("#brewery_results").empty();
+};
+
+// //  Function to create new row and column for 
+// function createNewResultRow(rowNumber) {
+//   var newRow = $("<tr>").append(
+//     $("<td>").text(trainName),
+//     $("<td>").text(trainDest),
+//     $("<td>").text(trainFreq),
+//     $("<td>").text(moment(nextTrain).format("LT")),
+//     $("<td>").text(tMinutesTillTrain),
+//   );
+// }
 
 //  Function that runs when the submit button is clicked
 $("#searchButton").on("click", function (event) {
@@ -23,23 +57,47 @@ $("#searchButton").on("click", function (event) {
   if (!hasInput) {
     alert("Modal box will pop up to tell user they need to input some information");
   } else {
+    
     // Add user inputs to the API query string
+    if ($("#by_city").val() !== "") {
+      breweryCity = $("#by_city").val().toLowerCase().trim().replace(/ /g, "%20");
+      console.log(breweryCity);
+      queryURL = queryURL + "&by_city=" + breweryCity;
+      console.log(queryURL);
+
+    };
     if ($("#by_state").val() !== "") {
       breweryState = $("#by_state").val().toLowerCase().trim().replace(/ /g, "%20");
       console.log(breweryState);
       queryURL = queryURL + "&by_state=" + breweryState;
       console.log(queryURL);
     };
-    if ($("#by_city").val() !== "") {
-      breweryCity = $("#by_city").val().toLowerCase().trim().replace(/ /g, "%20");
-      console.log(breweryCity);
-      queryURL = queryURL + "&by_city=" + breweryCity;
+    if ($("#by_postal").val() !== "") {
+      breweryPostal = $("#by_postal").val().trim();
+      console.log(breweryPostal);
+      queryURL = queryURL + "&by_postal=" + breweryPostal;
+      console.log(queryURL);
+
+    }
+    // if ($("#by_name").val() !== "") {
+    //   breweryName = $("#by_name").val().toLowerCase().trim().replace(/ /g, "%20");
+    //   console.log(breweryName);
+    //   queryURL = queryURL + "&by_name=" + breweryName;
+    //   console.log(queryURL);
+    // }
+    // if ($("#by_type").val() !== "") {
+    //   breweryType = $("#by_type").val().toLowerCase().trim().replace(/ /g, "%20");
+    //   console.log(breweryType);
+    //   queryURL = queryURL + "&by_type=" + breweryType;
+    //   console.log(queryURL);
+
+    // }
+    if ($("#by_tags").val() !== "") {
+      breweryTags = $("#by_tags").val().toLowerCase().trim().replace(/ /g, "%20");
+      console.log(breweryTags);
+      queryURL = queryURL + "&by_tags=" + breweryTags;
       console.log(queryURL);
     };
-    // breweryName = $("#by_name").val();
-    // breweryPostal = $("#by_postal").val();
-    // breweryType = $("#by_type").val();
-    // breweryTag = $("#by_tag").val();
 
     //  API call to openbrewerydb
     $.ajax({
@@ -47,20 +105,14 @@ $("#searchButton").on("click", function (event) {
       method: "GET"
     }).then(function (response) {
       console.log(response);
-      
+
       // Checks to make sure API call returned a JSON to use
       if (response.length === 0) {
         alert("This section will update and alert the user that no breweries were found using their search parameters")
+        resetUserInput();
       } else {
         console.log(response[0].name);
-        //  Return all variables to original values for a new search
-        breweryState = "";
-        breweryCity = "";
-        // breweryZipcode = "";
-        // breweryName = "";
-        // breweryTag = "";
-        // breweryType = "";
-        queryURL = "https://api.openbrewerydb.org/breweries?"
+        resetUserInput();
       }
     });
   }
