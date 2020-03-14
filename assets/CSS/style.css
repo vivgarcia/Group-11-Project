@@ -17,4 +17,8 @@ body {
 .container .card {
   text-align: left;
 }
+
+.container .card .btn-light {
+  float: right;
+}
 /*# sourceMappingURL=style.css.map */

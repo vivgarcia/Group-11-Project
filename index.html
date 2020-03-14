@@ -18,7 +18,7 @@
             <h1>Beer Run</h1>
             
             <div class="card">
-                <div class="card-header">Search</div>
+                <div class="card-header">Search <button class="btn btn-light" data-toggle="collapse" data-target=".card-body"><i class="far fa-minus-square"></i></button></div>
                 <div class="card-body">
                     <form>
                         <div class="form-group">
@@ -38,13 +38,21 @@
                             <input type="text" class="form-control" id="by_type" placeholder="micro">
                         </div>
                         <div class="form-group">
-                            <label for="">Tag</label>
-                            <input type="text" class="form-control" id="by_tag" placeholder="dog-friendly, patio, food-trucks, tours">
+                            <label for="">Tags</label>
+                            <input type="text" class="form-control" id="by_tags" placeholder="dog-friendly, patio, food-trucks, tours">
                         </div>
                         <button class="btn btn-primary" id="searchButton"><i class="fas fa-search"></i> Search</button>
                     </form>
                 </div>
             </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">Breweries</div>
+            <div class="card-body">
+                <!-- Brewery results will append here -->
+            </div>
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <!-- Custom JS -->
