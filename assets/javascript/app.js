@@ -1,7 +1,7 @@
-//  Create object to hold user input from text boxes
+//  Create variables to hold user input from text boxes
 var breweryCity = "";
 var breweryState = "";
-var breweryZipcode = "";
+var breweryPostal = "";
 var breweryName = "";
 var breweryType = "";
 var breweryTags = "";
@@ -46,7 +46,7 @@ function resetUserInput(){
 $("#searchButton").on("click", function (event) {
   event.preventDefault();
 
-  //  Code to make sure at the user has inputed some information
+  //  Code to make sure that the user has inputed some information
   var hasInput = false;
   $('.form-control').each(function () {
     if ($(this).val() !== "" && $(this).val() !== "Choose...") {
@@ -55,7 +55,11 @@ $("#searchButton").on("click", function (event) {
   });
   console.log(hasInput);
   if (!hasInput) {
-    alert("Modal box will pop up to tell user they need to input some information");
+    // alert("Modal box will pop up to tell user they need to input some information");
+    $(".modal-title").text("Your Input is Required");
+    $(".modal-body").html("<p>Please input at least one search item into the form.</p>");
+    $('#modalAlert').modal('show');
+    $('#modalAlert').modal('handleUpdate');
   } else {
     
     // Add user inputs to the API query string
@@ -106,10 +110,13 @@ $("#searchButton").on("click", function (event) {
 
       // Checks to make sure API call returned a JSON to use
       if (response.length === 0) {
-        alert("This section will update and alert the user that no breweries were found using their search parameters")
+        // alert("This section will update and alert the user that no breweries were found using their search parameters");
+        $(".modal-title").text("");
+        $(".modal-body").html("<p>Your search items returned no results. Please try again.</p>");
+        $('#modalAlert').modal('show');
+        $('#modalAlert').modal('handleUpdate');
         resetUserInput();
       } else {
-
         console.log(response[0].name);
         resetUserInput();
       }
