@@ -8,42 +8,42 @@ var breweryTags = "";
 var queryURL = "https://api.openbrewerydb.org/breweries?";
 
 //  Function to clear values from the form and reset the variables
-function resetUserInput(){
-   //  Return all variables to original values for a new search
-   breweryCity = "";
-   breweryState = "";
-   breweryPostal = "";
-   breweryName = "";
-   breweryType = "";
-   breweryTags = "";
-   queryURL = "https://api.openbrewerydb.org/breweries?";
+function resetUserInput() {
+  //  Return all variables to original values for a new search
+  breweryCity = "";
+  breweryState = "";
+  breweryPostal = "";
+  breweryName = "";
+  breweryType = "";
+  breweryTags = "";
+  queryURL = "https://api.openbrewerydb.org/breweries?";
 
-   //  Clear user form values
-   $("#by_city").val();
-   $("#by_state").val();
-   $("#by_postal").val();
-   $("#by_name").val();
-   $("#by_type").val();
-   $("#by_tags").val();
-   
-   //  Clear dynamically created results
-   $("#brewery_results").empty();
+  //  Clear user form values
+  $("#by_city").val();
+  $("#by_state").val();
+  $("#by_postal").val();
+  $("#by_name").val();
+  $("#by_type").val();
+  $("#by_tags").val();
+
+  //  Clear dynamically created results
+  $("#brewery_results").empty();
 };
 
 //  Function to create new row and columns for breweryObject Parameter passed
 function createNewResult(breweryObject) {
-   var newRow = $("<div>").addClass("row my-2").attr("id", breweryObject.id);
-   var newCol = $("<div>").addClass("col-md-6 border border-secondary rounded py-2");
-   newCol.html(
-     "<p>" + breweryObject.name + "</p>" +
-     "<p>" + breweryObject.street + "</p>"+
-     "<p>" + breweryObject.city + "</p>" +
-     "<p>" + breweryObject.state + "</p>" +
-     "<p>" + breweryObject.postal_code + "</p>" +
-     "<a href='" + breweryObject.website_url + "' target='_blank'>" + breweryObject.website_url + "</a>"
-     );
-   newRow.append(newCol);
-   $("#brewery_results").append(newRow);
+  var newRow = $("<div>").addClass("row my-2").attr("id", breweryObject.id);
+  var newCol = $("<div>").addClass("col-md-6 border border-secondary rounded py-2");
+  newCol.html(
+    "<p>" + breweryObject.name + "</p>" +
+    "<p>" + breweryObject.street + "</p>" +
+    "<p>" + breweryObject.city + "</p>" +
+    "<p>" + breweryObject.state + "</p>" +
+    "<p>" + breweryObject.postal_code + "</p>" +
+    "<a href='" + breweryObject.website_url + "' target='_blank'>" + breweryObject.website_url + "</a>"
+  );
+  newRow.append(newCol);
+  $("#brewery_results").append(newRow);
 };
 
 //  Function that runs when the submit button is clicked
@@ -63,7 +63,7 @@ $("#searchButton").on("click", function (event) {
     $('#modalAlert').modal('show');
     $('#modalAlert').modal('handleUpdate');
   } else {
-    
+
     // Add user inputs to the API query string
     if ($("#by_city").val() !== "") {
       breweryCity = $("#by_city").val().toLowerCase().trim().replace(/ /g, "%20");
@@ -84,18 +84,18 @@ $("#searchButton").on("click", function (event) {
       console.log(queryURL);
 
     };
-     if ($("#by_brewery").val() !== "") {
+    if ($("#by_brewery").val() !== "") {
       breweryName = $("#by_brewery").val().toLowerCase().trim().replace(/ /g, "%20");
       console.log(breweryName);
       queryURL = queryURL + "&by_name=" + breweryName;
       console.log(queryURL);
     };
     if ($("#by_type").val() !== "Choose...") {
-       breweryType = $("#by_type").val().toLowerCase().trim().replace(/ /g, "%20");
-       console.log(breweryType);
-       queryURL = queryURL + "&by_type=" + breweryType;
-       console.log(queryURL);
-     };
+      breweryType = $("#by_type").val().toLowerCase().trim().replace(/ /g, "%20");
+      console.log(breweryType);
+      queryURL = queryURL + "&by_type=" + breweryType;
+      console.log(queryURL);
+    };
     if ($("#by_tags").val() !== "") {
       breweryTags = $("#by_tags").val().toLowerCase().trim().replace(/ /g, "%20");
       console.log(breweryTags);
@@ -123,6 +123,37 @@ $("#searchButton").on("click", function (event) {
           createNewResult(response[index]);
         };
       }
+  
+      $.ajax({
+        // url: queryURL,
+        url: "https://api.yelp.com/v3/businesses/search?location=Austin",
+        headers: { 
+          "Authorization": "Bearer *",
+        "Access-Control-Allow-Origin" : "/Users/britneyross/Desktop/Project/Group-11-Project/index.html" },
+        method: "GET"
+      })
+      .then(function (response) {
+        console.log(response)
+        // get name of brewery 
+        var nameOfBrewery = response.data.name;
+        return $.ajax({
+          url: "https://api.yelp.com/v3/businesses/search"
+        })
+      })
+      .then(function (yelpBusinessSearchResponse) {
+        // get the id of the brewery from the yelp response
+        var breweryId = yelpBusinessSearchResponse[0].data.id;
+        return $.ajax({
+          url: `https://yelp.com/businesses/${breweryId}`
+        })
+      })
+      .then(function (finalResponse) {
+        // do something with finalResponse
+      })
+      .catch(function (err) {
+        // If any of the calls go wrong
+        // do something to display to the user that something went wrong
+      })
     });
   }
 });
