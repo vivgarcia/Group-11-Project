@@ -5,7 +5,6 @@ var breweryPostal = "";
 var breweryName = "";
 var breweryType = "";
 var breweryTags = "";
-
 var queryURL = "https://api.openbrewerydb.org/breweries?";
 
 //  Function to clear values from the form and reset the variables
@@ -26,21 +25,26 @@ function resetUserInput(){
    $("#by_name").val();
    $("#by_type").val();
    $("#by_tags").val();
-
+   
    //  Clear dynamically created results
    $("#brewery_results").empty();
 };
 
-//  Function to create new row and column for 
-// function createNewResultRow(rowNumber) {
-//   var newRow = $("<tr>").append(
-//     $("<td>").text(trainName),
-//     $("<td>").text(trainDest),
-//     $("<td>").text(trainFreq),
-//     $("<td>").text(moment(nextTrain).format("LT")),
-//     $("<td>").text(tMinutesTillTrain),
-//   );
-// }
+//  Function to create new row and columns for breweryObject Parameter passed
+function createNewResult(breweryObject) {
+   var newRow = $("<div>").addClass("row my-2").attr("id", breweryObject.id);
+   var newCol = $("<div>").addClass("col-md-6 border border-secondary rounded py-2");
+   newCol.html(
+     "<p>" + breweryObject.name + "</p>" +
+     "<p>" + breweryObject.street + "</p>"+
+     "<p>" + breweryObject.city + "</p>" +
+     "<p>" + breweryObject.state + "</p>" +
+     "<p>" + breweryObject.postal_code + "</p>" +
+     "<a href='" + breweryObject.website_url + "' target='_blank'>" + breweryObject.website_url + "</a>"
+     );
+   newRow.append(newCol);
+   $("#brewery_results").append(newRow);
+};
 
 //  Function that runs when the submit button is clicked
 $("#searchButton").on("click", function (event) {
@@ -53,9 +57,7 @@ $("#searchButton").on("click", function (event) {
       hasInput = true;
     };
   });
-  console.log(hasInput);
   if (!hasInput) {
-    // alert("Modal box will pop up to tell user they need to input some information");
     $(".modal-title").text("Your Input is Required");
     $(".modal-body").html("<p>Please input at least one search item into the form.</p>");
     $('#modalAlert').modal('show');
@@ -110,15 +112,16 @@ $("#searchButton").on("click", function (event) {
 
       // Checks to make sure API call returned a JSON to use
       if (response.length === 0) {
-        // alert("This section will update and alert the user that no breweries were found using their search parameters");
         $(".modal-title").text("");
         $(".modal-body").html("<p>Your search items returned no results. Please try again.</p>");
         $('#modalAlert').modal('show');
         $('#modalAlert').modal('handleUpdate');
         resetUserInput();
       } else {
-        console.log(response[0].name);
         resetUserInput();
+        for (let index = 0; index < response.length; index++) {
+          createNewResult(response[index]);
+        };
       }
     });
   }
