@@ -1,5 +1,5 @@
 body {
-  background-color: #0060a7;
+  background-image: url("../images/wood2-bg.jpg");
 }
 
 .container {
@@ -20,5 +20,12 @@ body {
 
 .container .card .btn-light {
   float: right;
+}
+
+.container .card .card-header {
+  background-color: #0060a7;
+  color: #ffcc00;
+  font-weight: 700;
+  font-size: 20px;
 }
 /*# sourceMappingURL=style.css.map */
