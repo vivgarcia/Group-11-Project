@@ -125,35 +125,35 @@ $("#searchButton").on("click", function (event) {
       }
   
       $.ajax({
-        // url: queryURL,
-        url: "https://api.yelp.com/v3/businesses/search?location=Austin",
-        headers: { 
-          "Authorization": "Bearer *",
-        "Access-Control-Allow-Origin" : "/Users/britneyross/Desktop/Project/Group-11-Project/index.html" },
+        url: queryURL,
         method: "GET"
       })
-      .then(function (response) {
-        console.log(response)
-        // get name of brewery 
-        var nameOfBrewery = response.data.name;
-        return $.ajax({
-          url: "https://api.yelp.com/v3/businesses/search"
-        })
-      })
-      .then(function (yelpBusinessSearchResponse) {
-        // get the id of the brewery from the yelp response
-        var breweryId = yelpBusinessSearchResponse[0].data.id;
-        return $.ajax({
-          url: `https://yelp.com/businesses/${breweryId}`
-        })
-      })
+        .then(function (response) {
+          console.log(response)
+          // perform yelp search call
+          return $.ajax({
+            url: "https://api.yelp.com/v3/businesses/search?location=Austin",
+            headers: {
+              "Authorization": "Bearer *",
+              "Access-Control-Allow-Origin": "/Users/britneyross/Desktop/Project/Group-11-Project/index.html"
+            },
+          }).then(function (response) {
+            // perform yelp business call with business IDs,
+            // TODO - Add subsequent .then that adds all business to a list
+            response.data.forEach(element => {
+              $.ajax({
+                url: `https://yelp.com/businesses/${element.id}`
+              });
+            });
+          });
+        });
+    })
       .then(function (finalResponse) {
         // do something with finalResponse
       })
       .catch(function (err) {
         // If any of the calls go wrong
         // do something to display to the user that something went wrong
-      })
-    });
+      });
   }
 });
