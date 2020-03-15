@@ -1,7 +1,7 @@
 $headerColor: #ffcc00;
 $textColor: #fff;
 $fontStack: 'Helvetica', sans-serif;
-$backgroundColor: #0060a7;
+$mainColor: #0060a7;
 
 @mixin displayingContent{
     text-align: center;
@@ -9,7 +9,7 @@ $backgroundColor: #0060a7;
 }
 
 body{
-    background-color: $backgroundColor;
+    background-image: url("../images/wood2-bg.jpg");
 }
 
 .container{
@@ -24,6 +24,12 @@ body{
         text-align: left;
         .btn-light{
             float: right;
+        }
+        .card-header{
+            background-color: $mainColor;
+            color: $headerColor;
+            font-weight: 700;
+            font-size: 20px;
         }
     }
 
