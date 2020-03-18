@@ -52,7 +52,7 @@ body {
   font-size: 20px;
 }
 
-select {
-  background-color: #383838 !important;
+#by_type {
+  background-color: #383838;
 }
 /*# sourceMappingURL=style.css.map */
