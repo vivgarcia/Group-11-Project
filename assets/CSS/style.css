@@ -1,8 +1,6 @@
 body {
-
   background-image: url("../images/beer-wall.jpeg");
   font-family: 'Montserrat', sans-serif;
-
 }
 
 .container {
@@ -33,7 +31,6 @@ body {
   float: right;
 }
 
-
 .container .card .btn .fa-minus-square {
   color: #fff;
 }
@@ -48,4 +45,10 @@ body {
   color: #fff;
 }
 
+.container .card .card-header {
+  background-color: #1f1f1f;
+  color: #fff;
+  font-weight: 700;
+  font-size: 20px;
+}
 /*# sourceMappingURL=style.css.map */
