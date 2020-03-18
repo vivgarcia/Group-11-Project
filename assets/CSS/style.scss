@@ -5,31 +5,48 @@ $mainColor: #0060a7;
 
 @mixin displayingContent{
     text-align: center;
-    padding-top: 50px;
+    padding-top: 20px;
 }
 
 body{
-    background-image: url("../images/wood2-bg.jpg");
+    background-image: url("../images/beer-wall.jpeg");
+    font-family: 'Montserrat', sans-serif;
+            
 }
 
 .container{
     @include displayingContent();
-    h1{
-        color: $headerColor;
-        font-family: $fontStack;
-        font-size: 72px;
-        font-weight: 700;
-    } 
+    background-color: rgba(0, 0, 0, 0.5);
+    .header{
+
+        h1{
+            color: $textColor;
+            font-family: $fontStack;
+            font-size: 72px;
+            font-weight: 700;
+            padding: 10px;
+        } 
+        img{
+            width: 500px;
+        }
+    }
     .card{
+        background-color: #1f1f1f;
+        color: $textColor;
         text-align: left;
-        .btn-light{
+        .btn{
             float: right;
+            .fa-minus-square{
+                color: $textColor;
+            }
         }
         .card-header{
-            background-color: $mainColor;
-            color: $headerColor;
             font-weight: 700;
             font-size: 20px;
+        }
+        input{
+            background-color: #383838;
+            color: $textColor;
         }
     }
 
