@@ -121,33 +121,25 @@ $("#searchButton").on("click", function (event) {
         resetUserInput();
         for (let index = 0; index < response.length; index++) {
           createNewResult(response[index]);
+
+          setTimeout(function () {
+            var authHeader = "Bearer " + API_KEY;
+            var queryURL2 = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=" + response[index].name + "&location=" + response[index].city + "," + response[index].state;
+
+
+            // perform yelp search call
+            $.ajax({
+              url: queryURL2,
+              headers: {
+                "Authorization": authHeader,
+              },
+            })
+          }, index * 250)
         };
       }
-  
-      $.ajax({
-        url: queryURL,
-        method: "GET"
-      })
-        .then(function (response) {
-          console.log(response)
-          // perform yelp search call
-          return $.ajax({
-            url: "https://api.yelp.com/v3/businesses/search?location=Austin",
-            headers: {
-              "Authorization": "Bearer *",
-              "Access-Control-Allow-Origin": "/Users/britneyross/Desktop/Project/Group-11-Project/index.html"
-            },
-          }).then(function (response) {
-            // perform yelp business call with business IDs,
-            // TODO - Add subsequent .then that adds all business to a list
-            response.data.forEach(element => {
-              $.ajax({
-                url: `https://yelp.com/businesses/${element.id}`
-              });
-            });
-          });
-        });
     })
+
+
       .then(function (finalResponse) {
         // do something with finalResponse
       })
