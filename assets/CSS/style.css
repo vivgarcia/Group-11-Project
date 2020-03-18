@@ -1,31 +1,51 @@
 body {
-  background-image: url("../images/wood2-bg.jpg");
+
+  background-image: url("../images/beer-wall.jpeg");
+  font-family: 'Montserrat', sans-serif;
+
 }
 
 .container {
   text-align: center;
-  padding-top: 50px;
+  padding-top: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.container h1 {
-  color: #ffcc00;
+.container .header h1 {
+  color: #fff;
   font-family: "Helvetica", sans-serif;
   font-size: 72px;
   font-weight: 700;
+  padding: 10px;
+}
+
+.container .header img {
+  width: 500px;
 }
 
 .container .card {
+  background-color: #1f1f1f;
+  color: #fff;
   text-align: left;
 }
 
-.container .card .btn-light {
+.container .card .btn {
   float: right;
 }
 
+
+.container .card .btn .fa-minus-square {
+  color: #fff;
+}
+
 .container .card .card-header {
-  background-color: #0060a7;
-  color: #ffcc00;
   font-weight: 700;
   font-size: 20px;
 }
+
+.container .card input {
+  background-color: #383838;
+  color: #fff;
+}
+
 /*# sourceMappingURL=style.css.map */
