@@ -9,9 +9,10 @@ $mainColor: #0060a7;
 }
 
 body{
+
     background-image: url("../images/beer-wall.jpeg");
     font-family: 'Montserrat', sans-serif;
-            
+           
 }
 
 .container{
@@ -47,6 +48,12 @@ body{
         input{
             background-color: #383838;
             color: $textColor;
+        }
+        .card-header{
+            background-color: $mainColor;
+            color: $headerColor;
+            font-weight: 700;
+            font-size: 20px;
         }
     }
 
