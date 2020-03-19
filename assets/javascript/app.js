@@ -166,8 +166,7 @@ $("#searchButton").on("click", function (event) {
       }
     }).then(function (finalResponse) {
       // do something with finalResponse
-    })
-      .catch(function (err) {
+    }).catch(function (err) {
         // If any of the calls go wrong
         // do something to display to the user that something went wrong
       });
