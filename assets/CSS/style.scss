@@ -1,7 +1,8 @@
 $headerColor: #ffcc00;
 $textColor: #fff;
-$fontStack: 'Helvetica', sans-serif;
-$mainColor: #0060a7;
+$fontStack: 'Montserrat', sans-serif;
+$lightBGColor: #383838;
+$darkBGColor: #1f1f1f;
 
 @mixin displayingContent{
     text-align: center;
@@ -11,8 +12,7 @@ $mainColor: #0060a7;
 body{
 
     background-image: url("../images/beer-wall.jpeg");
-    font-family: 'Montserrat', sans-serif;
-           
+    font-family: $fontStack;
 }
 
 .container{
@@ -32,7 +32,7 @@ body{
         }
     }
     .card{
-        background-color: #1f1f1f;
+        background-color: $darkBGColor;
         color: $textColor;
         text-align: left;
         .btn{
@@ -46,15 +46,18 @@ body{
             font-size: 20px;
         }
         input{
-            background-color: #383838;
+            background-color: $lightBGColor;
             color: $textColor;
         }
         .card-header{
-            background-color: $mainColor;
-            color: $headerColor;
+            background-color: $darkBGColor;
+            color: $textColor;
             font-weight: 700;
             font-size: 20px;
         }
     }
+}
 
+#by_type{
+    background-color: $lightBGColor;
 }

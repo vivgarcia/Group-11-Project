@@ -1,8 +1,6 @@
 body {
-
   background-image: url("../images/beer-wall.jpeg");
-  font-family: 'Montserrat', sans-serif;
-
+  font-family: "Montserrat", sans-serif;
 }
 
 .container {
@@ -13,7 +11,7 @@ body {
 
 .container .header h1 {
   color: #fff;
-  font-family: "Helvetica", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 72px;
   font-weight: 700;
   padding: 10px;
@@ -33,7 +31,6 @@ body {
   float: right;
 }
 
-
 .container .card .btn .fa-minus-square {
   color: #fff;
 }
@@ -48,4 +45,14 @@ body {
   color: #fff;
 }
 
+.container .card .card-header {
+  background-color: #1f1f1f;
+  color: #fff;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+#by_type {
+  background-color: #383838;
+}
 /*# sourceMappingURL=style.css.map */
