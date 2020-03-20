@@ -116,14 +116,13 @@ $("#searchButton").on("click", function (event) {
       breweryTags = $("#by_tags").val().toLowerCase().trim().replace(/ /g, "%20");
       queryURL = queryURL + "&by_tags=" + breweryTags;
     };
+    queryURL = queryURL + "&per_page=50";
 
     //  API call to openbrewerydb
     $.ajax({
       url: queryURL,
       method: "GET"
     }).then(function (response) {
-      console.log(response);
-
       // Checks to make sure API call returned a JSON to use
       if (response.length === 0) {
         $(".modal-title").text("");
@@ -133,42 +132,44 @@ $("#searchButton").on("click", function (event) {
         resetUserInput();
       } else {
         resetUserInput();
-        
+
         //  For loop to create list of identifed breweries based on user input
         for (let index = 0; index < response.length; index++) {
-          createNewResult(response[index]);
+          if (response[index].latitude !== null) {
+            createNewResult(response[index]);
+            
+            //  Function for performing initial yelp call
+            setTimeout(function () {
+              var resultName = response[index].name.replace(/ /g, "%20");
+              var resultCity = response[index].city.replace(/ /g, "%20");
+              var resultState = response[index].state.replace(/ /g, "%20");
+              var resultLatitude = response[index].latitude;
+              var resultLongitude = response[index].longitude;
+              var resultID = response[index].id;
 
-          //  Function for performing initial yelp call
-          setTimeout(function () {
-            var resultName = response[index].name.replace(/ /g, "%20");
-            var resultCity = response[index].city.replace(/ /g, "%20");
-            var resultState = response[index].state.replace(/ /g, "%20");
-            var resultID = response[index].id;
-            console.log(resultName);
-            var queryURL2 = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=" + resultName + "&location=" + resultCity + "," + resultState + "&sort_by=best_match&limit=5";
+              var queryURL2 = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=" + resultName + "&location=" + resultCity + "," + resultState + "&latitude=" + resultLatitude + "&longitude" + resultLongitude + "&sort_by=best_match&limit=3";
 
-            // perform inital yelp search call and get id of brewery searched to get reviews
-            $.ajax({
-              url: queryURL2,
-              method: "GET",
-              headers: {
-                "Authorization": authHeader,
-              },
-            }).then(function (response2) {
-              console.log(response2);
-              if(response2.businesses.length > 0){
-                console.log(response2.businesses[0].id);
-              reviewResults(response2.businesses[0].id, resultID);
-              }
-            });
-          }, index * 700);
+              // perform inital yelp search call and get id of brewery searched to get reviews
+              $.ajax({
+                url: queryURL2,
+                method: "GET",
+                headers: {
+                  "Authorization": authHeader,
+                },
+              }).then(function (response2) {
+                if (response2.businesses.length > 0) {
+                  reviewResults(response2.businesses[0].id, resultID);
+                }
+              });
+            }, index * 700);
+          }
         };
       }
     }).then(function (finalResponse) {
       // do something with finalResponse
     }).catch(function (err) {
-        // If any of the calls go wrong
-        // do something to display to the user that something went wrong
-      });
+      // If any of the calls go wrong
+      // do something to display to the user that something went wrong
+    });
   }
 });
