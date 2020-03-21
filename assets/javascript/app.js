@@ -33,26 +33,33 @@ function resetUserInput() {
 
 //  Yelp ajax call and creation of results
 function reviewResults(yelpID, breweryID) {
-  var queryURL3 = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/" + yelpID + "/reviews";
-  $.ajax({
-    url: queryURL3,
-    method: "GET",
-    headers: {
-      "Authorization": authHeader,
-    },
-  }).then(function (response3) {
-    console.log(response3);
+  if (yelpID !== "blank") {
+    var queryURL3 = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/" + yelpID + "/reviews";
+    $.ajax({
+      url: queryURL3,
+      method: "GET",
+      headers: {
+        "Authorization": authHeader,
+      },
+    }).then(function (response3) {
+      var newCol = $("<div>").addClass("col-md-5 border border-secondary rounded py-2 ml-1");
+      newCol.html("<h5>Yelp Reviews</h5>");
+      $("#" + breweryID).append(newCol);
+
+      var newList = $("<ol>");
+      for (let index = 0; index < response3.reviews.length; index++) {
+        var newListItem = $("<li>").text(response3.reviews[index].text);
+        newList.append(newListItem);
+      };
+      newCol.append(newList);
+    });
+  } else {
     var newCol = $("<div>").addClass("col-md-5 border border-secondary rounded py-2 ml-1");
     newCol.html("<h5>Yelp Reviews</h5>");
-    var newList = $("<ol>");
     $("#" + breweryID).append(newCol);
-    for (let index = 0; index < response3.reviews.length; index++) {
-      console.log(response3.reviews[index].text);
-      var newListItem = $("<li>").text(response3.reviews[index].text);
-      newList.append(newListItem);
-    };
-    newCol.append(newList);
-  });
+    var textNoReview = $("<div>").html("<br><br><p>No yelp review was available for this brewery.</p>");
+    newCol.append(textNoReview);
+  }
 };
 
 //  Function to create new row and columns for breweryObject Parameter passed
@@ -137,7 +144,7 @@ $("#searchButton").on("click", function (event) {
         for (let index = 0; index < response.length; index++) {
           if (response[index].latitude !== null) {
             createNewResult(response[index]);
-            
+
             //  Function for performing initial yelp call
             setTimeout(function () {
               var resultName = response[index].name.replace(/ /g, "%20");
@@ -159,6 +166,8 @@ $("#searchButton").on("click", function (event) {
               }).then(function (response2) {
                 if (response2.businesses.length > 0) {
                   reviewResults(response2.businesses[0].id, resultID);
+                } else {
+                  reviewResults("blank", resultID);
                 }
               });
             }, index * 700);
